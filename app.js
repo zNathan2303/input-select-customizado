@@ -3,7 +3,9 @@ lucide.createIcons()
 const select = document.querySelector('.select'),
   selectedValue = document.getElementById('selected-value'),
   optionsViewButton = document.getElementById('options-view-button'),
-  inputsOptions = document.querySelectorAll('.option input')
+  inputsOptions = document.querySelectorAll('.option input'),
+  categorySelect = document.querySelector('#category-select'),
+  options = document.querySelector('#options')
 
 inputsOptions.forEach(input => {
   input.addEventListener('click', event => {
@@ -17,15 +19,16 @@ inputsOptions.forEach(input => {
   })
 })
 
-window.addEventListener('keydown', e => {
+// Sai do menu de opções após usar as teclas: Esc, Space, Enter
+select.addEventListener('keydown', event => {
   if (!select.classList.contains('open')) return
 
-  if (e.key == 'Escape' || e.key == ' ' || e.key == 'Enter') {
+  if (event.key == 'Escape' || event.key == ' ' || event.key == 'Enter') {
     optionsViewButton.click()
   }
 })
 
-optionsViewButton.addEventListener('input', () => {
+optionsViewButton.addEventListener('change', () => {
   select.classList.toggle('open')
 
   if (!select.classList.contains('open')) return
@@ -37,10 +40,10 @@ optionsViewButton.addEventListener('input', () => {
   input.focus()
 })
 
-document.addEventListener('click', event => {
+// Sai das opções após clicar fora da tela
+select.addEventListener('click', event => {
   if (!select.classList.contains('open')) return
-
-  const options = document.querySelector('#options')
+  if (categorySelect.contains(event.target)) return
 
   if (!options.contains(event.target)) {
     optionsViewButton.click()
